@@ -1,0 +1,56 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h1>Blog List</h1>
+    {% if blog_list %}
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th class="text-center" scope="col">Post Date</th>
+                <th class="text-center" scope="col">Blogger</th>
+                <th class="text-center" scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for blog in blog_list %}
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="d-flex align-content-start justify-content-start col-sm-10">
+                                <a class="btn-outline-secondary rounded px-1 py-1" href="{{ blog.get_absolute_url }}"
+                                   style="color: white">{{ blog.title }}</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">{{ blog.post_date }}</td>
+                    <td>
+                        <div class="text-center">
+                            <a class="btn-outline-warning rounded px-2 py-2" style="color: #0d6efd"
+                               href="{{ blog.blogger.get_absolute_url }}">@{{ blog.blogger.borrower }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex align-content-center justify-content-center">
+                            <a class="btn btn-primary mx-1"
+                               onclick="abrir_modal_edicion('{% url 'update-blog' blog.id %}')">Update</a>
+                            <a class="btn btn-danger mx-1"
+                               onclick="abrir_modal_edicion('{% url 'delete-blog' blog.id %}')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if page_obj.paginator.num_pages > 1 %}
+            <p></p>
+            {% include 'pagination.html' %}
+        {% endif %}
+    {% else %}
+        <p>There are no blog started jet.</p>
+    {% endif %}
+    <div class="row d-flex align-content-center justify-content-center">
+        <a class="btn btn-success col-sm-6"
+           onclick="abrir_modal_edicion('{% url 'create-blog' %}')">New Blog</a>
+    </div>
+{% endblock %}

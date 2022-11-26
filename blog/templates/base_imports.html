@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block block_imports %}
+
+
+        <!-- Add bootstrap css and js-->
+        {#    start #}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        {# end #}
+        <!-- Add customs Templates Filters-->
+        {# start #}
+        {% load to_space %}
+        {# end #}
+        <!-- Add jQuery -->
+        {# start #}
+        {% load static %}
+        <script type="text/javascript" src="{% static 'js/jquery.js' %}">
+        </script>
+        {# end #}
+    {% endblock %}
+</head>

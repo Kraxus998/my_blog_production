@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div {% block modal_attrs %}
+    class="modal-dialog modal-dialog-centered modal-lg"
+    role="document"
+{% endblock %}>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                {% block modal_title %}
+                    Title
+                {% endblock %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <p></p>
+        {% block modal_header %}
+
+        {% endblock %}
+
+        <form
+                {% block form_attrs %}
+                    class="needs-validation" method="post" action=""
+
+                {% endblock %}>
+            {% block form_security %}
+
+                {% csrf_token %}
+
+            {% endblock %}
+            <div class="modal-body">
+                {% block modal_body %}
+
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                {% block modal_footer %}
+
+                {% endblock %}
+            </div>
+        </form>
+    </div>
+</div>

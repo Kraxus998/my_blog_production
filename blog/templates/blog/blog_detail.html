@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>{{ blog.title }}</h1>
+    <p></p>
+    <p><strong>post date: </strong>{{ blog.post_date }}</p>
+    <p><strong>Blogger: </strong><a href="{{ blog.blogger.get_absolute_url }}">{{ blog.blogger.borrower }}</a></p>
+    <p><strong>Description: </strong></p>
+    <p>{{ blog.description }}</p>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Comments</h4>
+        {% if blog.blogcomment_set.all %}
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                {% for comment in blog.blogcomment_set.all %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne{{ comment.id }}">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#panelsStayOpen-collapseOne{{ comment.id }}" aria-expanded="true"
+                                    aria-controls="panelsStayOpen-collapseOne{{ comment.id }}">
+                                by @{{ comment.blogger.borrower }} - {{ comment.post_date }}
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne{{ comment.id }}" class="accordion-collapse collapse show"
+                             aria-labelledby="panelsStayOpen-headingOne{{ comment.id }}">
+                            <div class="accordion-body">
+                                <strong>{{ comment.description }}</strong> It is shown by default, until the
+                                collapse plugin adds the appropriate classes that we use to style each element. These
+                                classes
+                                control the overall appearance, as well as the showing and hiding via CSS transitions.
+                                You
+                                can
+                                modify any of this with custom CSS or overriding our default variables. It's also worth
+                                noting
+                                that just about any HTML can go within the <code>.accordion-body</code>, though the
+                                transition
+                                does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if page_obj.paginator.num_pages > 1 %}
+                <p></p>
+                {% include 'pagination.html' %}
+            {% endif %}
+        {% else %}
+            <p>There are no commented already.</p>
+        {% endif %}
+    </div>
+{% endblock %}

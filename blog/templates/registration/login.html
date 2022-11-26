@@ -1,0 +1,45 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+    <form class="needs-validation" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-text">@</div>
+                    <i type="text" class="form-control" id="inputEmail3" placeholder="Username"
+                       required>{{ form.username }}</i>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-text">***</div>
+                    <i type="password" class="form-control" id="inputPassword3"
+                           placeholder="Password"
+                       required> {{ form.password }}</i>
+                </div>
+                <p><a href="{% url 'password_reset' %}" class="float-end">Lost password?</a></p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            {{ remote_url }}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" value="login" class="btn btn-primary">Sign in</button>
+            <input type="hidden" name="next" value="{{ redirect_url }}?username={{ request.user }}&password=password">
+        </div>
+    </form>
+
+{% endblock %}

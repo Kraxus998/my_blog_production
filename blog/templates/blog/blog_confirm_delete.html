@@ -1,0 +1,32 @@
+{% extends "form_modal.html" %}
+
+{% block modal_title %}
+    Delete
+{% endblock %}
+
+{% block form_attrs %}
+
+    class="needs-validation"
+    method="post"
+    action="{% url 'delete-blog' blog.id %}"
+
+{% endblock %}
+
+{% block modal_body %}
+    <div class="img-thumbnail bg-light bg-gradient d-grid">
+        <p>Are you sure you want to delete the Blog:
+
+        </p>
+        <strong style="color: #6a1a21">" {{ blog }} "</strong> by <strong style="color: #0d6efd">@{{ blog.blogger }}?</strong>
+    </div>
+{% endblock %}
+
+{% block modal_footer %}
+
+    <p></p>
+    <input class="btn btn-primary" type="submit" value="Yes, delete."/>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+
+{% endblock %}
+
+

@@ -1,0 +1,31 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h1>My Blogs</h1>
+    {% if blog_list %}
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Post Date</th>
+                <th scope="col">Blogger</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for blog in blog_list %}
+                <tr>
+                    <td><a href="{{ blog.get_absolute_url }}" style="color: white">{{ blog.title }}</a></td>
+                    <td>{{ blog.post_date }}</td>
+                    <td><a href="{{ blog.blogger.get_absolute_url }}">@{{ blog.blogger.borrower }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if page_obj.paginator.num_pages > 1 %}
+            <p></p>
+            {% include 'pagination.html' %}
+        {% endif %}
+    {% else %}
+        <p>There are no blog started jet.</p>
+    {% endif %}
+{% endblock %}

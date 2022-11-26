@@ -1,0 +1,73 @@
+{% extends 'form_modal.html' %}
+
+{% block modal_attrs %}
+    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    role="document"
+{% endblock %}
+
+{% block modal_title %}
+    Register
+{% endblock %}
+
+{% block form_attrs %}
+
+    class="needs-validation"
+    method="post"
+    action="{% url 'my-register-modal' %}"
+
+{% endblock %}
+
+{% block modal_header %}
+    <p></p>
+    {% if form.errors %}
+        <p>Your password didn't match. Please try again.</p>
+    {% else %}
+        <h3 class="mx-3">Welcome to My Blog</h3>
+    {% endif %}
+
+{% endblock %}
+
+{% block form_security %}
+
+    {% csrf_token %}
+
+{% endblock %}
+
+{% block modal_body %}
+    <div class="img-thumbnail px-2 bg-light">
+        <p></p>
+        <div class="row mb-3">
+            <div class="col-sm-10 input-group">
+                <div class="input-group-text">@</div>
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-10 input-group">
+                <div class="input-group-text">***</div>
+                {{ form.password1 }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-10 input-group">
+                <div class="input-group-text">***</div>
+                {{ form.password2 }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_footer %}
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" value="login" class="btn btn-primary">Sign in</button>
+    {% if 'update-blog' in next %}
+        <input type="hidden" name="next" value="{% url 'all-blogs' %}">
+    {% elif 'delete-blog' in next %}
+        <input type="hidden" name="next" value="{% url 'all-blogs' %}">
+    {% elif 'create-blog' in next %}
+        <input type="hidden" name="next" value="{% url 'all-blogs' %}">
+    {% else %}
+        <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+
+{% endblock %}

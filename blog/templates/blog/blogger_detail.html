@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Blogger: {{ blogger.borrower }}</h1>
+    <p></p>
+    {% load static %}
+    <div class="row">
+        <div class="col-2">
+            <img src="{% static blogger.image %}" class="img-thumbnail" alt="">
+        </div>
+        <div class="col-2">
+            <h4>BIO</h4>
+            <p> {{ blogger.bio }}</p>
+        </div>
+    </div>
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Blogs</h4>
+        {% if blogger.blog_set.all %}
+            <table class="table table-dark table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Post Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for blog in blogger.blog_set.all %}
+                    <tr>
+                        <td><a href="{{ blog.get_absolute_url }}" style="color: white">{{ blog.title }}</a></td>
+                        <td>{{ blog.post_date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if page_obj.paginator.num_pages > 1 %}
+                <p></p>
+                {% include 'pagination.html' %}
+            {% endif %}
+        {% else %}
+            <p>There are no blog started jet.</p>
+        {% endif %}
+    </div>
+{% endblock %}
