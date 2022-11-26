@@ -12,7 +12,7 @@ urlpatterns = [
     # Home urls
     path(route='home/', view=homeView.indexView, name='home'),
     path(route='', view=homeView.indexView, name='home'),
-    path(route='api-network/', view=homeView.ApiView.apiNetworkView, name='api-network'),
+    # path(route='api-network/', view=homeView.ApiView.apiNetworkView, name='api-network'),
     path(route='my-login/', view=BloggerLoginDefaultView.as_view(), name='my-login'),
     path(route='remote-login/', view=RemoteLoginView.as_view(), name='remote-login'),
     path(route='my-login-modal/', view=BloggerLoginModalView.as_view(), name='my-login-modal'),
