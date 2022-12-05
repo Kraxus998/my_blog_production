@@ -10,8 +10,6 @@ from django.contrib.auth.models import User
 
 
 # Create your tests here.
-
-
 class BLogListViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -19,26 +17,26 @@ class BLogListViewTest(TestCase):
             username='testing',
             password='testing'
         )
-        format = ImageFormat.objects.create(
+        iformat = ImageFormat.objects.create(
             name='jpg'
         )
         image = Image.objects.create(
             name='testing_image',
-            format=format,
+            format=iformat,
             route='/images'
         )
         # Create 5 blog for pagination tests
-        number_of_bloggers = 5
+        number_of_bloggers = 10
         for blogger_num in range(number_of_bloggers):
             Blogger.objects.create(
-                username=user.username,
-                bio=f'soy{user.username}',
+                username=f'{user.username}_user#{blogger_num}',
+                bio=f'soy{user.username}_user#{blogger_num}',
                 image=image,
                 borrower=user
             )
 
     def test_view_url_exists_at_desired_location(self):
-        resp = self.client.get('/all-bloggers')
+        resp = self.client.get('/all-bloggers/')
         self.assertEqual(resp.status_code, 200)
 
     def test_view_url_accessible_by_name(self):
@@ -56,7 +54,7 @@ class BLogListViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'] == True)
-        self.assertTrue(len(resp.context['blogger_list']) == 10)
+        self.assertTrue(len(resp.context['blogger_list']) == 4)
 
     def test_lists_all_authors(self):
         # Get second page and confirm it has (exactly) remaining 3 items
@@ -64,4 +62,4 @@ class BLogListViewTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('is_paginated' in resp.context)
         self.assertTrue(resp.context['is_paginated'] == True)
-        self.assertTrue(len(resp.context['blogger_list']) == 3)
+        self.assertTrue(len(resp.context['blogger_list']) == 4)
