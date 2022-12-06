@@ -174,7 +174,7 @@ class CommentsListViewTest(TestCase):
             self.assertTrue(owner_of_all_comments_in_list)
 
         else:
-            # Asing False to the Flag if the user is not owner of one comment in the list
+            # Assigns False to the Flag if the user is not owner of one comment in the list
             for comment in response.context['my_comments_list']:
                 if not comment.blogger.borrower == response.context['user']:
                     owner_of_all_comments_in_list = False
